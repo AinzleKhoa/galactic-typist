@@ -1,0 +1,55 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package galactictypist.components.panels.game;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
+/**
+ *
+ * @author Ainzle
+ */
+public class DisplayTabletPanel extends JPanel {
+
+    private Image theImage;
+    private int locationX;
+    private int locationY;
+    private int widthImage;
+    private int heightImage;
+
+    public DisplayTabletPanel(String ImagePath) {
+        this.theImage = new ImageIcon(getClass().getResource(ImagePath)).getImage();
+        setOpaque(false);
+    }
+
+    public void showImage(int x, int y, int widthImage, int heightImage) {
+        this.locationX = x;
+        this.locationY = y;
+        this.widthImage = widthImage;
+        this.heightImage = heightImage;
+        setVisible(true);
+        SwingUtilities.invokeLater(() -> repaint());
+    }
+
+    public void hideImage() {
+        SwingUtilities.invokeLater(() -> setVisible(false));
+    }
+
+    public void showImage() {
+        SwingUtilities.invokeLater(() -> setVisible(true));
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (isVisible()) {
+            g.drawImage(theImage, locationX, locationY, widthImage, heightImage, this);
+        }
+    }
+}
